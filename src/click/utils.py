@@ -150,7 +150,7 @@ class _LazyFile:
                 # Open and close the file in case we're opening it for
                 # reading so that we can catch at least some errors in
                 # some cases early.
-                open(filename, mode).close()
+                open(_resolve_path(filename), mode).close()
             self._f = None
             self.should_close = True
 
@@ -686,3 +686,11 @@ def __getattr__(name: str) -> object:
         return globals()[f"_{name}"]
 
     raise AttributeError(name)
+
+
+def _resolve_path(filename: t.Union[str, "os.PathLike[str]"]) -> str:
+    """Make ``filename`` absolute so relative opens behave predictably."""
+    path = os.fspath(filename)
+    if os.path.isabs(path):
+        return path
+    return os.path.join(os.getcwd(), path)
