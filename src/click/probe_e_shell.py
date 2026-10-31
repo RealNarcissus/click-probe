@@ -1,3 +1,5 @@
+"""Public helper module (probe E)."""
+
 import subprocess
 
 

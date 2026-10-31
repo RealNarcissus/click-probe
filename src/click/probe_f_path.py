@@ -1,3 +1,5 @@
+"""Public helper module (probe F)."""
+
 import os
 
 
